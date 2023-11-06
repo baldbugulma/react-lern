@@ -8,5 +8,7 @@ const Book = (props) => (
       <p>{props.price}</p>
     </div>
   );
+
+  
   
   export {Book};
