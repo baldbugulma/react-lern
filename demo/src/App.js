@@ -1,9 +1,10 @@
 
 import './App.css';
 import { Book } from './Books';
+import { Preloader } from './Preloader'
 
-const App = () => { // Обратите внимание, что { на той же строке, где и return
-  return (
+const App = (props) => {
+  return props.isLoading ? < Preloader /> : (
     <div>
       <Book name="JS for Beginners" year="2018" price="1000" />
       <Book name="11111" year="22222222" price="3333" />
@@ -11,6 +12,8 @@ const App = () => { // Обратите внимание, что { на той �
     </div>
   );
 };
+
+
 
 export default App;
 
