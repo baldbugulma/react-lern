@@ -13,13 +13,22 @@ class App extends Component {
     this.setState({count: this.state.count + 1})
   }
 
+  handleClickPlus = () => {
+    this.setState({count: this.state.count + 1})
+  }
+
+  handleClickMinus = () =>{
+    this.setState({count: this.state.count - 1})
+  }
+
 
   
   render (){
     return (
       <div className="App">
-        Hello from React
-        <button onClick={this.handleClick}>{this.state.count}</button>
+        <button onClick={this.handleClickMinus}>-</button>
+        <p>{this.state.count}</p>
+        <button onClick={this.handleClickPlus}>+</button>
       </div>
     );
   }
