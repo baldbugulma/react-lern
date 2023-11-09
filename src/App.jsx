@@ -7,24 +7,35 @@ class App extends Component {
       count: 0,
       someKey: false
     };
+    this.handleClickPlus = this.handleClickPlus.bind(this);
+    this.handleClickMinus = this.handleClickMinus.bind(this);
   }
 
-  handleClick = () => {
+
+  handleClickPlus (){
     this.setState({count: this.state.count + 1})
   }
 
-  handleClickPlus = () => {
-    this.setState({count: this.state.count + 1})
-  }
-
-  handleClickMinus = () =>{
+  handleClickMinus (){
     this.setState({count: this.state.count - 1})
   }
 
+  componentDidMount(){
+    console.log('componentDidMount')
+  }
 
+  componentDidUpdate(){
+    console.log('componentDidUpdate')
+  }
+
+  componentWillUnmount(){
+    console.log('componentWillUnmount')
+  }
   
   render (){
+    console.log('render', this.state.count);
     return (
+
       <div className="App">
         <button onClick={this.handleClickMinus}>-</button>
         <p>{this.state.count}</p>
