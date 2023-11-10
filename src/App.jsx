@@ -4,28 +4,42 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      count: 0,
-      someKey: false
+      count: parseInt(localStorage.getItem('count')) || 0,
+      stop: true
     };
-    this.handleClickPlus = this.handleClickPlus.bind(this);
-    this.handleClickMinus = this.handleClickMinus.bind(this);
+    this.handleClickStart = this.handleClickStart.bind(this);
+    this.handleClickStop = this.handleClickStop.bind(this);
+
   }
 
 
-  handleClickPlus (){
-    this.setState({count: this.state.count + 1})
+  handleClickStart (){
+    this.setState({stop: false});
+    const interval = setInterval(() => {
+      this.setState({count: this.state.count + 1});
+      localStorage.setItem('count', this.state.count+1)
+      if (this.state.stop === true){
+        clearInterval(interval);
+      }
+    },1000);
+
   }
 
-  handleClickMinus (){
-    this.setState({count: this.state.count - 1})
+  handleClickStop (){
+    this.setState({stop: true});
   }
+
+
+
 
   componentDidMount(){
-    console.log('componentDidMount')
+    console.log('componentDidMount');
   }
 
   componentDidUpdate(){
     console.log('componentDidUpdate')
+    console.log(this.state.count)
+    console.log(this.state.stop)
   }
 
   componentWillUnmount(){
@@ -35,11 +49,10 @@ class App extends Component {
   render (){
     console.log('render', this.state.count);
     return (
-
       <div className="App">
-        <button onClick={this.handleClickMinus}>-</button>
         <p>{this.state.count}</p>
-        <button onClick={this.handleClickPlus}>+</button>
+        <button onClick={this.handleClickStart}>Start</button> 
+        <button onClick={this.handleClickStop}>Stop</button> 
       </div>
     );
   }
