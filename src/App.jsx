@@ -1,25 +1,55 @@
-import React, {Component} from 'react'
+import React from 'react';
 
-class App extends Component {
+export default class App extends React.Component {
     state = {
-      posts: [
-        {id:'abc1', name: 'JS Basics'},
-        {id:'abc2', name: 'JS Advanced'},
-        {id:'abc3', name: 'React JS'},
-      ]
+        count: 0,
+        isCounting: false,
     };
 
-  render() {
-    return (
-      <div className="App">
-        {this.state.posts.map(post => (
-        <h2 key = {post.id}>{post.name}</h2>
-        ))}
-      </div>
-    );
-  }
+    componentDidMount() {
+      const userCount = localStorage.getItem('count');
+      if (userCount){
+        this.setState({count: +userCount})
+      }
+    }
+
+    componentDidUpdate() {
+      localStorage.setItem('count', this.state.count);
+    }
+
+    componentWillUnmount() {
+      clearInterval(this.counterId)
+    }
+
+    handleStart = () => {
+      this.setState({isCounting: true})
+      this.counterId = setInterval(() => {
+        this.setState({count: this.state.count + 1})
+      }, 1000)
+    } 
+
+    handleStop = () => {
+      this.setState({isCounting: false})
+      clearInterval(this.counterId)
+    }
+
+    handleReset = () => {
+      this.setState({count: 0, isCounting: false})
+      clearInterval(this.counterId)
+    }
+
+    render() {
+        return (
+            <div className="App">
+                <h1>React Timer</h1>
+                <h3>{this.state.count}</h3>
+                {!this.state.isCounting ? (
+                    <button onClick={this.handleStart}>Start</button>
+                ) : (
+                    <button onClick={this.handleStop}>Stop</button>
+                )}
+                <button onClick={this.handleReset}>Reset</button>
+            </div>
+        );
+    }
 }
-
-
-
-export default App;
