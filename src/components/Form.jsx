@@ -32,7 +32,7 @@ class Form extends React.Component {
     }
     else {
       alert('Поздравляю с подпиской')
-      this.resetForm();
+      this.resetForm()
     }
   }
 
