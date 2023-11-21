@@ -1,68 +1,46 @@
 import React from 'react';
 
 class FormWithRef extends React.Component {
-    state = {
-        email: '',
-        isAgreeWithTerms: false,
-    };
-
-    handleEmail = (event) => {
-        this.setState({ email: event.target.value });
-    };
-
-    handleCheckbox = (event) => {
-        this.setState({
-            isAgreeWithTerms: event.target.checked,
-        });
-    };
-
-    handleSubmit = () => {
-        const isValidEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-            this.state.email.toLocaleLowerCase()
-        );
-        const isValidCheckbox = this.state.isAgreeWithTerms;
-
-        if (!isValidEmail) {
-            alert('Your email is not valid');
-            return;
+    constructor(){
+        super();
+        this.state = {
+            card: '',
+            email: ''
         }
+        this.firstName = React.createRef();
+    }
 
-        if (!isValidCheckbox) {
-            alert('You should accept all terms and conditions');
-            return;
-        }
 
-        this.setState({
-            email: '',
-            isAgreeWithTerms: false,
-        });
-        alert('Thank you for subscription!');
-    };
+    handleChange = (event) => {
+        this.setState({[event.target.name]:event.target.value})
+    }
+
+    componentDidMount(){
+        console.log(this.firstNameRef)
+        this.firstName.current.focus();
+    }
 
     render() {
-        const { email, isAgreeWithTerms } = this.state;
+        const { email, card } = this.state;
 
         return (
             <div>
+                <input
+                    type="text"
+                    name="card"
+                    placeholder="card"
+                    value={card}
+                    onChange={this.handleChange}
+                    ref = {this.firstName}
+                />
                 <input
                     type="email"
                     name="email"
                     placeholder="email"
                     value={email}
-                    onChange={this.handleEmail}
+                    onChange={this.handleChange}
                 />
-                <br />
-                <label>
-                    <input
-                        type="checkbox"
-                        name="isAgreeWithTerms"
-                        checked={isAgreeWithTerms}
-                        onChange={this.handleCheckbox}
-                    />
-                    I agree with terms and conditions
-                </label>
-                <br />
-                <button onClick={this.handleSubmit}>Send</button>
+
             </div>
         );
     }
